@@ -4,7 +4,7 @@ _realname=crt
 _mingw_suff=mingw-w64-${CARCH}
 pkgname="${_mingw_suff}-${_realname}-svn"
 _ver_base=4.0.0
-pkgver=4.0.0.6437
+pkgver=4.0.0.6461
 pkgrel=1
 pkgdesc='MinGW-w64 CRT for Windows'
 arch=('any')
@@ -19,8 +19,15 @@ conflicts=("${_mingw_suff}-${_realname}")
 replaces=()
 backup=()
 options=('!strip' 'staticlibs' '!emptydirs')
-source=("${_realname}"::"svn+svn://svn.code.sf.net/p/mingw-w64/code/trunk/mingw-w64-crt")
-md5sums=('SKIP')
+source=("${_realname}"::"svn+svn://svn.code.sf.net/p/mingw-w64/code/trunk/mingw-w64-crt"
+"imp.patch")
+md5sums=('SKIP'
+'SKIP')
+
+prepare() {
+	cd ${srcdir}/${_realname}
+	patch -p2 -i ${srcdir}/imp.patch
+}
 
 pkgver() {
   cd "$srcdir/${_realname}"
